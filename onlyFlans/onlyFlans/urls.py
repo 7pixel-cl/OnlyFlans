@@ -17,11 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from web.views import home, about, bienvenido
+from web.views import home, acerca, bienvenido
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
-    path("about/", about, name="about"),
-    path("welcome/", bienvenido, name="welcome"),
+    path("acerca/", acerca, name="acerca"),
+    path("bienvenido/", bienvenido, name="bienvenido"),
 ]

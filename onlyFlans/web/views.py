@@ -7,7 +7,7 @@ def home(request):
     return render(request, "index.html")
 
 
-def about(request):
+def acerca(request):
     return render(request, "about.html")
 
 
