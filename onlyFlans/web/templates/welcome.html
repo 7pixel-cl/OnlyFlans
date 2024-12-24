@@ -1,1 +1,28 @@
-{% extends 'base.html' %} {% block content %} Bievenido cliente {% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-4">Flanes Exclusivos</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for flan in flanes %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="position-absolute top-0 end-0 m-2">
+                    <span class="badge bg-danger">Exclusivo</span>
+                </div>
+                <img src="{{ flan.image_url }}" class="card-img-top" alt="{{ flan.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ flan.name }}</h5>
+                    <p class="card-text">{{ flan.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                No hay flanes exclusivos disponibles en este momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
