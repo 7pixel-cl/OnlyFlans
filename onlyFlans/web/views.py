@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Flan
 from .forms import ContactFormModelForm
 
@@ -7,9 +8,18 @@ def home(request):
     flanes = Flan.objects.filter(is_private=False)
     return render(request, "index.html", {'flanes': flanes})
 
+@login_required
 def bienvenido(request):
     flanes = Flan.objects.filter(is_private=True)
     return render(request, "welcome.html", {'flanes': flanes})
+
+def detalle_flan(request, slug):
+    flan = get_object_or_404(Flan, slug=slug)
+    # Si el flan es privado, verificar que el usuario esté autenticado
+    if flan.is_private and not request.user.is_authenticated:
+        messages.error(request, 'Necesitas iniciar sesión para ver este flan exclusivo.')
+        return redirect('login')
+    return render(request, "flan_detail.html", {'flan': flan})
 
 def contacto(request):
     if request.method == 'POST':

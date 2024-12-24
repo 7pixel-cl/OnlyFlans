@@ -1,24 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <h1 class="text-center mb-4">Flanes Exclusivos</h1>
+<div class="container py-5">
+    <!-- Banner de bienvenida personalizado -->
+    <div class="bg-primary text-white p-4 mb-4 rounded shadow">
+        <div class="container">
+            <h1 class="display-4">¡Bienvenido {{ user.get_username }}!</h1>
+            <p class="lead">Aquí encontrarás nuestra selección exclusiva de flanes premium.</p>
+        </div>
+    </div>
+
+    <!-- Sección de flanes exclusivos -->
+    <h2 class="text-center mb-4">Flanes Exclusivos</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for flan in flanes %}
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100 shadow">
                 <div class="position-absolute top-0 end-0 m-2">
                     <span class="badge bg-danger">Exclusivo</span>
                 </div>
-                <img src="{{ flan.image_url }}" class="card-img-top" alt="{{ flan.name }}">
+                <img src="{{ flan.image_url }}" class="card-img-top" alt="{{ flan.name }}"
+                    style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">{{ flan.name }}</h5>
-                    <p class="card-text">{{ flan.description }}</p>
+                    <p class="card-text">{{ flan.description|truncatechars:100 }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3">
+                    <a href="{% url 'detalle_flan' flan.slug %}" class="btn btn-primary w-100">
+                        <i class="fas fa-eye me-1"></i>Ver detalle
+                    </a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12">
             <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>
                 No hay flanes exclusivos disponibles en este momento.
             </div>
         </div>
